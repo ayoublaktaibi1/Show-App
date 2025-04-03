@@ -51,9 +51,3 @@ ShowApp est une application mobile développée avec **Flutter** qui permet aux 
 - Flutter SDK (dernière version stable)
 - Node.js (v14 ou supérieur)
 - Un émulateur ou un appareil physique pour tester l'application.
-
-### Étapes pour le Backend
-1. Clonez le dépôt :
-   ```bash
-   git clone [URL_DU_DEPOT]
-   cd show-app-backend
