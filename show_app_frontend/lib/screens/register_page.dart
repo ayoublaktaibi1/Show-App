@@ -1,24 +1,23 @@
 import 'package:flutter/material.dart';
-import 'home_page.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'package:shared_preferences/shared_preferences.dart';
-import '../config/api_config.dart'; // Assure-toi que ce fichier contient ton URL de base
+import 'login_page.dart';
+import '../config/api_config.dart';
 
-class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
+class RegisterPage extends StatefulWidget {
+  const RegisterPage({super.key});
 
   @override
-  _LoginPageState createState() => _LoginPageState();
+  _RegisterPageState createState() => _RegisterPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _RegisterPageState extends State<RegisterPage> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   String? errorMessage;
 
-  Future<void> login() async {
-    final url = Uri.parse('${ApiConfig.baseUrl}/auth/login');
+  Future<void> register() async {
+    final url = Uri.parse('${ApiConfig.baseUrl}/auth/register');
     final response = await http.post(
       url,
       headers: {'Content-Type': 'application/json'},
@@ -29,11 +28,8 @@ class _LoginPageState extends State<LoginPage> {
     );
 
     final data = jsonDecode(response.body);
-    if (response.statusCode == 200) {
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-      await prefs.setString('token', data['token']);
-
-      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const HomePage()));
+    if (response.statusCode == 201) {
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const LoginPage()));
     } else {
       setState(() {
         errorMessage = data['error'];
@@ -57,10 +53,12 @@ class _LoginPageState extends State<LoginPage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Icon(Icons.movie, size: 100, color: Colors.white),
+            const Icon(Icons.person_add, size: 100, color: Colors.white),
             const SizedBox(height: 20),
-            const Text("Welcome to ShowApp",
-                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.white)),
+            const Text(
+              "Create an Account",
+              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.white),
+            ),
             const SizedBox(height: 40),
             TextField(
               controller: _emailController,
@@ -97,14 +95,14 @@ class _LoginPageState extends State<LoginPage> {
                 padding: const EdgeInsets.symmetric(horizontal: 100, vertical: 15),
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
               ),
-              onPressed: login,
-              child: const Text("Login", style: TextStyle(fontSize: 18)),
+              onPressed: register,
+              child: const Text("Register", style: TextStyle(fontSize: 18)),
             ),
             TextButton(
               onPressed: () {
-                Navigator.pushNamed(context, '/register');
+                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const LoginPage()));
               },
-              child: const Text("Don't have an account? Register", style: TextStyle(color: Colors.white)),
+              child: const Text("Already have an account? Login", style: TextStyle(color: Colors.white)),
             ),
           ],
         ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'screens/login_page.dart';
+import 'screens/register_page.dart';
 
 void main() {
   runApp(const ShowApp());
@@ -17,6 +18,9 @@ class ShowApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       home: const LoginPage(),
+      routes: {
+        '/register': (context) => const RegisterPage(),
+      },
     );
   }
 }
