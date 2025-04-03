@@ -1,6 +1,6 @@
 # ShowApp - Application de Gestion de Films, Séries et Animés
 
-![Bannière ShowApp](assets/banner.png) *(Remplacez par une image représentative de votre application)*
+![Bannière ShowApp](banniereShowApp.jpg)
 
 ## 📌 Description
 
